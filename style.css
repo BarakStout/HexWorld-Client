@@ -1,0 +1,82 @@
+#hexagon {
+	width: 72px;
+	height: 43px;
+  left: 10px;
+	background: #5F6062;
+	position: relative;
+   top: 50px;
+   text-align: center;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+#hexagon:before {
+	content: "";
+	position: absolute;
+	top: -25px;
+	left: 0;
+	width: 0;
+	height: 0;
+	border-left: 36px solid transparent;
+	border-right: 36px solid transparent;
+	border-bottom: 25px solid #5F6062;
+    -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+#hexagon:after {
+	content: "";
+	position: absolute;
+	bottom: -24px;
+	left: 0;
+	width: 0;
+	height: 0;
+	border-left: 36px solid transparent;
+	border-right: 36px solid transparent;
+	border-top: 25px solid #5F6062;
+    -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+#hexagon:hover{
+  background: #EC008C;
+}
+
+#hexagon:hover:after{
+  border-top: 25px solid #EC008C;
+}
+#hexagon:hover:before{
+  border-bottom: 25px solid #EC008C;
+}
+
+.action-btn {
+  margin-top: 10px;
+  margin-buttom: 10px;
+  width: 100%;
+}
+
+.action-n-icon {
+  margin-bottom: 20px;
+}
+
+.leaderboard-user-row {
+  background-color: lightgreen;
+}
+
+form { background: #000; padding: 3px; width: 100%; }
+form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+#messages { list-style-type: none; margin: 0; padding: 0; height: 400px; border: 1px solid; }
+#messages li { padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #eee; }
+
+#notifications { list-style-type: none; margin: 0; padding: 0; height: 200px; border: 1px solid; }
+#notifications li { padding: 5px 10px; }
+#notifications li:nth-child(odd) { background: #eee; }
