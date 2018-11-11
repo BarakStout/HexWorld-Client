@@ -32,7 +32,8 @@ This software is distributed under the MIT license.
 
 ## Dependeices
 
-[Socket.io](https://socket.io/)
+* [Socket.io](https://socket.io/)
+* [Bootstrap 4](https://getbootstrap.com/)
 
 ## Authors
 
