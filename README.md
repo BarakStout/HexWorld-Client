@@ -30,6 +30,10 @@ Google survey?
 
 This software is distributed under the MIT license.
 
+## Dependeices
+
+[Socket.io](https://socket.io/)
+
 ## Authors
 
 Barak Stout & Miller Hollinger
