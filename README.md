@@ -1,9 +1,9 @@
 # HexWorld-Client
 Client code to connect to HewWorld server
 
-## Installation 
+## Installation
 
-1. Click on _Clone or download_ 
+1. Click on _Clone or download_
 2. Click on _Download Zip_
 3. Wait for download to complete
 4. *Unzip the files*
@@ -20,7 +20,7 @@ Client code to connect to HewWorld server
 
 If there is a feature you would like to see, please add it here:
 
-Google survey? 
+Google survey?
 
 ## Version
 
@@ -28,7 +28,7 @@ Google survey?
 
 ## License
 
-
+This software is distributed under the MIT license.
 
 ## Authors
 
