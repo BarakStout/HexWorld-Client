@@ -177,7 +177,7 @@ ul {
 
 /* Font */
 
-.messages. .notifications {
+.messages {
   font-size: 150%;
 }
 
@@ -212,7 +212,9 @@ ul {
 }
 
 .notifications {
+  height: 100%;
   margin: 0;
+  overflow-y: scroll;
   padding: 10px 20px 10px 20px;
 }
 

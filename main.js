@@ -58,16 +58,6 @@ $(function() {
     // Prevent markup from being injected into the message
     message = cleanInput(message);
 	
-	// -------------------------------- Trial #1 -----------------------------
-	var inputArray = message.split(" ");
-	if(inputArray[0].toUpperCase() == "TEST") 
-	{
-		socket.emit('action', "hihihiihihih");
-		console.log('hi');
-	
-	}
-	// -------------------------------- End Trial #1 -------------------------
-	
     // if there is a non-empty message and a socket connection
     if (message && connected) {
       $inputMessage.val('');
@@ -121,7 +111,7 @@ $(function() {
       .text(data.message);
 
     var typingClass = data.typing ? 'typing' : '';
-    var $messageDiv = $('<li class="notifications"/>')
+    var $messageDiv = $('<li class="notification	"/>')
       .data('username', data.username)
       .addClass(typingClass)
       .append($usernameDiv, $messageBodyDiv);
@@ -305,10 +295,6 @@ $(function() {
   
   socket.on('notifications', (data) => {
     if(connected) addNotificationsMessage(data);
-  });
-  
-  socket.on('action', (data) => {
-    addChatMessage(data);
   });
 
   // Whenever the server emits 'user joined', log it in the chat body
