@@ -25,6 +25,8 @@ $(function() {
   var $currentInput = $usernameInput.focus();
 
   var socket = io();
+  
+  var userList = [];
 
   const addParticipantsMessage = (data) => {
     var message = '';
@@ -335,6 +337,33 @@ $(function() {
     log('attempt to reconnect has failed');
   });
 
+   socket.on('update', function (users){
+        userList = users;
+        $('#users').empty();
+        for(var i=0; i<userList.length; i++) {
+			if(userList[i].username == username) {
+				var row = '';
+				row += '<tr class="leaderboard-user-row">';
+				row += '<td>'+userList[i].level+'</td>';
+				row += '<td>'+userList[i].territory+'</td>';
+				row += '<td>'+userList[i].username+'</td>';
+				row += '</tr>';
+				$('#users').append(row); 
+			}				
+        }
+		for(var i=0; i<userList.length; i++) {
+			if(userList[i].username != username) {
+				var row = '';
+				row += '<tr>';
+				row += '<td>'+userList[i].level+'</td>';
+				row += '<td>'+userList[i].territory+'</td>';
+				row += '<td>'+userList[i].username+'</td>';
+				row += '</tr>';
+				$('#users').append(row);
+			}				
+        }
+    });
+	
 });
 
 
