@@ -11,6 +11,7 @@ $(function() {
   var $window = $(window);
   var $usernameInput = $('.usernameInput'); // Input for username
   var $messages = $('.messages'); // Messages area
+  var $notifications = $('.notifications'); // notifications area
   var $inputMessage = $('.inputMessage'); // Input message input box
 
   var $loginPage = $('.login.page'); // The login page
@@ -109,6 +110,24 @@ $(function() {
 
     addMessageElement($messageDiv, options);
   }
+  
+  // Adds the visual chat message to the message list
+  const addNotificationsMessage = (data, options) => {
+    
+    var $usernameDiv = $('<span class="username"/>')
+      .text(data.username)
+      .css('color', getUsernameColor(data.username));
+    var $messageBodyDiv = $('<span class="notificationsBody">')
+      .text(data.message);
+
+    var typingClass = data.typing ? 'typing' : '';
+    var $messageDiv = $('<li class="notifications"/>')
+      .data('username', data.username)
+      .addClass(typingClass)
+      .append($usernameDiv, $messageBodyDiv);
+
+    addNotificationsElement($messageDiv, options);
+  }
 
   // Adds the visual chat typing message
   const addChatTyping = (data) => {
@@ -153,6 +172,37 @@ $(function() {
       $messages.append($el);
     }
     $messages[0].scrollTop = $messages[0].scrollHeight;
+  }
+  
+  // Adds a message element to the notifications and scrolls to the bottom
+  // el - The element to add as a message
+  // options.fade - If the element should fade-in (default = true)
+  // options.prepend - If the element should prepend
+  //   all other notifications (default = false)
+  const addNotificationsElement = (el, options) => {
+    var $el = $(el);
+
+    // Setup default options
+    if (!options) {
+      options = {};
+    }
+    if (typeof options.fade === 'undefined') {
+      options.fade = true;
+    }
+    if (typeof options.prepend === 'undefined') {
+      options.prepend = false;
+    }
+
+    // Apply options
+    if (options.fade) {
+      $el.hide().fadeIn(FADE_TIME);
+    }
+    if (options.prepend) {
+      $notifications.prepend($el);
+    } else {
+      $notifications.append($el);
+    }
+    $notifications[0].scrollTop = $notifications[0].scrollHeight;
   }
 
   // Prevents input from having injected markup
@@ -245,11 +295,16 @@ $(function() {
       prepend: true
     });
     addParticipantsMessage(data);
-  });
+	
+	});
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
     addChatMessage(data);
+  });
+  
+  socket.on('notifications', (data) => {
+    if(connected) addNotificationsMessage(data);
   });
   
   socket.on('action', (data) => {
@@ -295,3 +350,10 @@ $(function() {
   });
 
 });
+
+
+
+
+
+
+

@@ -73,7 +73,7 @@
 form { background: #000; padding: 3px; width: 100%; }
 form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; min-height: 500px; border: 1px solid; }
+#messages { list-style-type: none; margin: 0; padding: 0; height: 500px; border: 1px solid; }
 #messages li { padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #eee; }
 
@@ -177,7 +177,7 @@ ul {
 
 /* Font */
 
-.messages {
+.messages. .notifications {
   font-size: 150%;
 }
 
@@ -203,6 +203,16 @@ ul {
   height: 100%;
   margin: 0;
   overflow-y: scroll;
+  padding: 10px 20px 10px 20px;
+}
+
+.notificationsArea {
+  height: 100%;
+  padding-bottom: 60px;
+}
+
+.notifications {
+  margin: 0;
   padding: 10px 20px 10px 20px;
 }
 
