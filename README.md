@@ -19,10 +19,10 @@ Client code to connect to HewWorld server
 ## Feedback
 
 Do you have a great idea for HexWorld? Send it to us here:  
-[Suggestion Survey](https://goo.gl/forms/gRmnER2iVsCZ2z4U2)
+[Suggestion Survey](https://goo.gl/forms/gRmnER2iVsCZ2z4U2)  
 
-Got something to say? Fill out this:
-[Feedback Survey](https://goo.gl/forms/Qh4sjtxSueJrxAAi2)
+Got something to say? Fill out this:  
+[Feedback Survey](https://goo.gl/forms/Qh4sjtxSueJrxAAi2)   
 
 ## Version
 
