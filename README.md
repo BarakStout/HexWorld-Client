@@ -16,11 +16,13 @@ Client code to connect to HewWorld server
 [short description]
 [link to full tutorial]
 
-## Feature Request
+## Feedback
 
-If there is a feature you would like to see, please add it here:
+Do you have a great idea for HexWorld? Send it to us here:  
+[Suggestion Survey](https://goo.gl/forms/gRmnER2iVsCZ2z4U2)  
 
-Google survey?
+Got something to say? Fill out this:  
+[Feedback Survey](https://goo.gl/forms/Qh4sjtxSueJrxAAi2)   
 
 ## Version
 

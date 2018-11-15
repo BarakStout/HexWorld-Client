@@ -25,7 +25,7 @@ $(function() {
   var $currentInput = $usernameInput.focus();
 
   var socket = io();
-  
+
   var userList = [];
 
   const addParticipantsMessage = (data) => {
@@ -59,7 +59,7 @@ $(function() {
     var message = $inputMessage.val();
     // Prevent markup from being injected into the message
     message = cleanInput(message);
-	
+
     // if there is a non-empty message and a socket connection
     if (message && connected) {
       $inputMessage.val('');
@@ -102,10 +102,10 @@ $(function() {
 
     addMessageElement($messageDiv, options);
   }
-  
+
   // Adds the visual chat message to the message list
   const addNotificationsMessage = (data, options) => {
-    
+
     var $usernameDiv = $('<span class="username"/>')
       .text(data.username)
       .css('color', getUsernameColor(data.username));
@@ -165,7 +165,7 @@ $(function() {
     }
     $messages[0].scrollTop = $messages[0].scrollHeight;
   }
-  
+
   // Adds a message element to the notifications and scrolls to the bottom
   // el - The element to add as a message
   // options.fade - If the element should fade-in (default = true)
@@ -282,19 +282,19 @@ $(function() {
   socket.on('login', (data) => {
     connected = true;
     // Display the welcome message
-    var message = "Welcome to Socket.IO Chat – ";
+    var message = "<#> Welcome to HexWorld <#>";
     log(message, {
       prepend: true
     });
     addParticipantsMessage(data);
-	
+
 	});
 
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
     addChatMessage(data);
   });
-  
+
   socket.on('notifications', (data) => {
     if(connected) addNotificationsMessage(data);
   });
@@ -348,8 +348,8 @@ $(function() {
 				row += '<td>'+userList[i].territory+'</td>';
 				row += '<td>'+userList[i].username+'</td>';
 				row += '</tr>';
-				$('#users').append(row); 
-			}				
+				$('#users').append(row);
+			}
         }
 		for(var i=0; i<userList.length; i++) {
 			if(userList[i].username != username) {
@@ -360,15 +360,8 @@ $(function() {
 				row += '<td>'+userList[i].username+'</td>';
 				row += '</tr>';
 				$('#users').append(row);
-			}				
+			}
         }
     });
-	
+
 });
-
-
-
-
-
-
-
