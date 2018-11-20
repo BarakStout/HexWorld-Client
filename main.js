@@ -28,6 +28,10 @@ $(function() {
 
   var userList = [];
 
+  var silentMode = false;
+  var quietMode = false;
+  var blockList = [];
+
   const addParticipantsMessage = (data) => {
     var message = '';
     if (data.numUsers === 1) {
@@ -82,6 +86,8 @@ $(function() {
 
   // Adds the visual chat message to the message list
   const addChatMessage = (data, options) => {
+
+    if(arrayContains(data.username,blockList)) return;
     // Don't fade the message in if there is an 'X was typing'
     var $typingMessages = getTypingMessages(data);
     options = options || {};
@@ -292,13 +298,47 @@ $(function() {
 
 	});
 
+  socket.on('login failed', () => {
+    console.log('failed');
+  });
+
   // Whenever the server emits 'new message', update the chat body
   socket.on('new message', (data) => {
-    addChatMessage(data);
+    if(!silentMode && !quietMode) addChatMessage(data);
   });
 
   socket.on('notifications', (data) => {
     console.log(data);
+    addNotificationsMessage(data);
+  });
+
+  socket.on('silent', (data) => {
+    silentMode = true;
+    addNotificationsMessage(data)
+  });
+
+  socket.on('quiet', (data) => {
+    quietMode = true;
+    addNotificationsMessage(data)
+  });
+
+  socket.on('listen', (data) => {
+    silentMode = false;
+    quietMode = false;
+    addNotificationsMessage(data);
+  });
+
+  socket.on('whisper', (data) => {
+    if(!silentMode) addChatMessage(data);
+  });
+
+  socket.on('block', (data) => {
+    if(!arrayContains(data.blockUser,blockList)) blockList.push(data.blockUser);
+    addNotificationsMessage(data);
+  });
+
+  socket.on('unblock', (data) => {
+    if(arrayContains(data.blockUser,blockList)) blockList.pop(data.blockUser);
     addNotificationsMessage(data);
   });
 
@@ -368,3 +408,8 @@ $(function() {
     });
 
 });
+
+function arrayContains(needle, arrhaystack)
+{
+    return (arrhaystack.indexOf(needle) > -1);
+}
