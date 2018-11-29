@@ -342,6 +342,10 @@ $(function() {
     addNotificationsMessage(data);
   });
 
+  socket.on('adminmsg', (data) => {
+    addNotificationsMessage(data);
+  });
+
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', (data) => {
     log(data.username + ' joined');
@@ -367,6 +371,11 @@ $(function() {
 
   socket.on('disconnect', () => {
     log('you have been disconnected');
+  });
+
+  socket.on('forceDisconnect', function(){
+    log('you have been kicked from the server by admin');
+    socket.disconnect();
   });
 
   socket.on('reconnect', () => {
