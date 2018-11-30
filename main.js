@@ -305,7 +305,7 @@ $(function() {
     $loginPage.on('click');
     username = "";
     $currentInput = $usernameInput.focus();
-
+    $('#loginerror').removeAttr("hidden");
   });
 
   // Whenever the server emits 'new message', update the chat body

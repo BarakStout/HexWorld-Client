@@ -244,3 +244,8 @@ ul {
   right: 0;
   width: 100%;
 }
+
+.error-message {
+	padding-top: 20px;
+	color: red;
+}
