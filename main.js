@@ -298,7 +298,14 @@ $(function() {
 	});
 
   socket.on('login failed', () => {
-    console.log('failed');
+    connected = false;
+    $chatPage.hide();
+    $chatPage.off('click');
+    $loginPage.fadeIn();
+    $loginPage.on('click');
+    username = "";
+    $currentInput = $usernameInput.focus();
+
   });
 
   // Whenever the server emits 'new message', update the chat body
