@@ -402,6 +402,7 @@ $(function() {
 			if(userList[i].username == username) {
 				var row = '';
 				row += '<tr class="leaderboard-user-row">';
+        row += '<td>'+userList[i].age+'</td>';
 				row += '<td>'+userList[i].level+'</td>';
 				row += '<td>'+userList[i].territory+'</td>';
 				row += '<td>'+userList[i].username+'</td>';
@@ -413,6 +414,7 @@ $(function() {
 			if(userList[i].username != username) {
 				var row = '';
 				row += '<tr>';
+        row += '<td>'+userList[i].age+'</td>';
 				row += '<td>'+userList[i].level+'</td>';
 				row += '<td>'+userList[i].territory+'</td>';
 				row += '<td>'+userList[i].username+'</td>';
