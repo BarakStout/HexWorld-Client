@@ -118,8 +118,8 @@ $(function() {
       .text(data.username)
       .css('color', getUsernameColor(data.username));
     var $messageBodyDiv = $('<span class="notificationsBody">')
-      .text(data.message);
-
+      .html(data.message);
+		console.log(data.message);
     var typingClass = data.typing ? 'typing' : '';
     var $messageDiv = $('<li class="notification	"/>')
       .data('username', data.username)
