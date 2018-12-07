@@ -84,9 +84,9 @@ $(function() {
       updateAspects({'army':0,
                      'science': 0,
                      'production':0,
-                     'diplomcy':0,
-                     'growtch':0,
-                     'devlopment':0});
+                     'diplomacy':0,
+                     'growth':0,
+                     'development':0});
     }
   }
 
@@ -220,9 +220,7 @@ $(function() {
     if (typeof options.fade === 'undefined') {
       options.fade = true;
     }
-    if (typeof options.prepend === 'undefined') {
-      options.prepend = false;
-    }
+      options.prepend = true;
 
     // Apply options
     if (options.fade) {
@@ -290,6 +288,11 @@ $(function() {
     myEmpire.aspects['growth'].level = stats.growth;
     myEmpire.aspects['development'].level = stats.development;
     $('#army_lvl').text(" " + myEmpire.aspects['army'].level);
+    $('#science_lvl').text(" " + myEmpire.aspects['science'].level);
+    $('#production_lvl').text(" " + myEmpire.aspects['production'].level);
+    $('#diplomacy_lvl').text(" " + myEmpire.aspects['diplomacy'].level);
+    $('#growth_lvl').text(" " + myEmpire.aspects['growth'].level);
+    $('#development_lvl').text(" " + myEmpire.aspects['development'].level);
   }
 
   // Keyboard events
@@ -443,16 +446,17 @@ $(function() {
         userList = users;
         $('#users').empty();
         for(var i=0; i<userList.length; i++) {
-			if(userList[i].username == username) {
-				var row = '';
-				row += '<tr class="leaderboard-user-row">';
-        row += '<td>'+userList[i].age+'</td>';
-				row += '<td>'+userList[i].level+'</td>';
-				row += '<td>'+userList[i].territory+'</td>';
-				row += '<td>'+userList[i].username+'</td>';
-				row += '</tr>';
-				$('#users').append(row);
-			}
+    			if(userList[i].username == username) {
+    				var row = '';
+    				row += '<tr class="leaderboard-user-row">';
+            row += '<td>'+userList[i].age+'</td>';
+    				row += '<td>'+userList[i].level+'</td>';
+    				row += '<td>'+userList[i].territory+'</td>';
+    				row += '<td>'+userList[i].username+'</td>';
+    				row += '</tr>';
+    				$('#users').append(row);
+
+    			}
         }
 		for(var i=0; i<userList.length; i++) {
 			if(userList[i].username != username) {
@@ -464,45 +468,59 @@ $(function() {
 				row += '<td>'+userList[i].username+'</td>';
 				row += '</tr>';
 				$('#users').append(row);
-			}
+			   }
         }
+        $('#users > tr').click(
+            function(){
+              addToInput($(this).children('td')[3].innerHTML+' ');
+              console.log($(this).children('td'));
+            }
+        );
     });
 
     socket.on('update empire', (stats) => {
       updateAspects(stats);
     });
 
-  });
 
+    function arrayContains(needle, arrhaystack)
+    {
+        return (arrhaystack.indexOf(needle) > -1);
+    }
 
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
-function arrayContains(needle, arrhaystack)
-{
-    return (arrhaystack.indexOf(needle) > -1);
-}
+    function addActionDiv(name,primary,secondary)
+    {
+      str = '<div id="action_div1">' +
+            '<div class="row content action-n-icon">' +
+            '<div class="col-md-5">' +
+            '<img src="img/'+name+'_icon.png" width="100" style="padding:20px;" /></div>' +
+            '<div class="col-md-7">'+capitalizeFirstLetter(name)+' <span class="action-level-label" id="'+name+'_lvl"></span>' +
+            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">Primary</button>' +
+            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">Secondary</button>' +
+            '</div></div><div class="progress">' +
+            '<div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">10/30</div>' +
+            '</div></div>';
+        $('#actions').append(str);
+        $('#'+name+'_primary').click(function(){addToInput('#'+primary+' ')});
+        $('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
+    }
 
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
+    function addToInput(msg)
+    {
+      $('#input').val($('#input').val() + msg);
+      $currentInput.focus();
+    }
 
-function addActionDiv(name)
-{
-  str = '<div id="action_div1">' +
-        '<div class="row content action-n-icon">' +
-        '<div class="col-md-6">' +
-        '<img src="img/'+name+'_icon.png" width="100" style="padding:20px;" /></div>' +
-        '<div class="col-md-6">'+capitalizeFirstLetter(name)+' level<span class="action-level-label" id="'+name+'_lvl"></span>' +
-        '<button type="button" class="btn btn-primary action-btn">Primary</button>' +
-        '<button type="button" class="btn btn-primary action-btn">Secondary</button>' +
-        '</div></div><div class="progress">' +
-        '<div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">10/30</div>' +
-        '</div></div>';
-    $('#actions').append(str);
-}
+    addActionDiv('army','trai','figh');
+    addActionDiv('science','rese','disc');
+    addActionDiv('production','prod','trad');
+    addActionDiv('diplomacy','nego','trea');
+    addActionDiv('growth','gove','conq');
+    addActionDiv('development','inve','buil');
 
-addActionDiv('army');
-addActionDiv('science');
-addActionDiv('production');
-addActionDiv('diplomacy');
-addActionDiv('growth');
-addActionDiv('development');
+// end of file - DO NOT REMOVE!
+});
