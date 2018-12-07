@@ -7,6 +7,9 @@ $(function() {
     '#3b88eb', '#3824aa', '#a700ff', '#d300e7'
   ];
 
+  var MAX_RESOURCE_QUANTITY = 30000; // UPDATE THIS <<<<<<<<<<<<<<<
+  var ASPECT_NAMES = ['army','science','production','diplomacy','growth','development'];
+
   // Initialize variables
   var $window = $(window);
   var $usernameInput = $('.usernameInput'); // Input for username
@@ -35,10 +38,11 @@ $(function() {
   // ------------ //
   // private info //
   // ------------ //
-  function MyAspect(name, shortening, level) {
+  function MyAspect(name, shortening, level, quantity) {
     this.name = name;
     this.shortening = shortening;
     this.level = level;
+    this.quantity = quantity;
   }
 
   // ------------ //
@@ -46,12 +50,12 @@ $(function() {
   // ------------ //
   function MyEmpire() {
     this.aspects = {
-      'army' : new MyAspect('Army','{S}',0),
-  	  'science' : new MyAspect('Science','[D]',0),
-  	  'production' : new MyAspect('Production','(G)',0),
-  	  'diplomacy' : new MyAspect('Diplomacy','#A#',0),
-  	  'growth' : new MyAspect('Growth','!P!',0),
-  	  'development' : new MyAspect('Development','>P>',0)
+      'army' : new MyAspect('Army','{S}',0,0),
+  	  'science' : new MyAspect('Science','[D]',0,0),
+  	  'production' : new MyAspect('Production','(G)',0,0),
+  	  'diplomacy' : new MyAspect('Diplomacy','#A#',0,0),
+  	  'growth' : new MyAspect('Growth','!P!',0,0),
+  	  'development' : new MyAspect('Development','>P>',0,0)
     };
   }
 
@@ -81,16 +85,16 @@ $(function() {
       // Tell the server your username
       socket.emit('add user', username);
 
-      updateAspects({'army':0,
-                     'science': 0,
-                     'production':0,
-                     'diplomacy':0,
-                     'growth':0,
-                     'development':0});
+      updateAspects({'army': [0,5],
+                     'science': [0,0],
+                     'production': [0,0],
+                     'diplomacy': [0,0],
+                     'growth': [0,0],
+                     'development': [0,0]});
     }
   }
 
-  // Sends a chat message
+  // Sends a chat messages
   const sendMessage = () => {
     var message = $inputMessage.val();
     // Prevent markup from being injected into the message
@@ -231,7 +235,7 @@ $(function() {
     } else {
       $notifications.append($el);
     }
-    $notifications[0].scrollTop = $notifications[0].scrollHeight;
+    //$notifications[0].scrollTop = $notifications[0].scrollHeight;
   }
 
   // Prevents input from having injected markup
@@ -280,19 +284,18 @@ $(function() {
 
   const updateAspects = (stats) => {
     console.log(stats);
-    console.log(myEmpire.aspects['army'].level);
-    myEmpire.aspects['army'].level = stats.army;
-    myEmpire.aspects['science'].level = stats.science;
-    myEmpire.aspects['production'].level = stats.production;
-    myEmpire.aspects['diplomacy'].level = stats.diplomacy;
-    myEmpire.aspects['growth'].level = stats.growth;
-    myEmpire.aspects['development'].level = stats.development;
-    $('#army_lvl').text(" " + myEmpire.aspects['army'].level);
-    $('#science_lvl').text(" " + myEmpire.aspects['science'].level);
-    $('#production_lvl').text(" " + myEmpire.aspects['production'].level);
-    $('#diplomacy_lvl').text(" " + myEmpire.aspects['diplomacy'].level);
-    $('#growth_lvl').text(" " + myEmpire.aspects['growth'].level);
-    $('#development_lvl').text(" " + myEmpire.aspects['development'].level);
+    for(i=0;i<ASPECT_NAMES.length;i++)
+    {
+      aspect = ASPECT_NAMES[i];
+      //console.log(aspect); console.log(stats[aspect]);
+      myEmpire.aspects[aspect].level = stats[aspect][0];
+      myEmpire.aspects[aspect].quantity = stats[aspect][1];
+      $('#'+aspect+'_lvl').text(" " + myEmpire.aspects[aspect].level);
+      $('#'+aspect+'_progressbar')
+        .css('width', '' + (myEmpire.aspects[aspect].quantity/MAX_RESOURCE_QUANTITY*100) + '%')
+        .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(MAX_RESOURCE_QUANTITY));
+    }
+
   }
 
   // Keyboard events
@@ -492,6 +495,10 @@ $(function() {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
     function addActionDiv(name,primary,secondary)
     {
       str = '<div id="action_div1">' +
@@ -502,7 +509,7 @@ $(function() {
             '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">Primary</button>' +
             '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">Secondary</button>' +
             '</div></div><div class="progress">' +
-            '<div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">10/30</div>' +
+            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div>';
         $('#actions').append(str);
         $('#'+name+'_primary').click(function(){addToInput('#'+primary+' ')});

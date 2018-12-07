@@ -10,6 +10,9 @@
   margin-bottom: 10px;
 }
 
+.progress-bar{
+	color: #000000;
+}
 .leaderboard-user-row {
   background-color: lightgreen;
 }
