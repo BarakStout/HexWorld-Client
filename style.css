@@ -1,69 +1,13 @@
-#hexagon {
-	width: 72px;
-	height: 43px;
-  left: 10px;
-	background: #5F6062;
-	position: relative;
-   top: 50px;
-   text-align: center;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-#hexagon:before {
-	content: "";
-	position: absolute;
-	top: -25px;
-	left: 0;
-	width: 0;
-	height: 0;
-	border-left: 36px solid transparent;
-	border-right: 36px solid transparent;
-	border-bottom: 25px solid #5F6062;
-    -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-#hexagon:after {
-	content: "";
-	position: absolute;
-	bottom: -24px;
-	left: 0;
-	width: 0;
-	height: 0;
-	border-left: 36px solid transparent;
-	border-right: 36px solid transparent;
-	border-top: 25px solid #5F6062;
-    -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
-
-#hexagon:hover{
-  background: #EC008C;
-}
-
-#hexagon:hover:after{
-  border-top: 25px solid #EC008C;
-}
-#hexagon:hover:before{
-  border-bottom: 25px solid #EC008C;
-}
 
 .action-btn {
-  margin-top: 10px;
-  margin-buttom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   width: 100%;
+	    padding: 0.005rem .75rem;
 }
 
 .action-n-icon {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .leaderboard-user-row {
@@ -248,4 +192,8 @@ ul {
 .error-message {
 	padding-top: 20px;
 	color: red;
+}
+
+.progress {
+	margin-top: -20px;
 }

@@ -32,6 +32,31 @@ $(function() {
   var quietMode = false;
   var blockList = [];
 
+  // ------------ //
+  // private info //
+  // ------------ //
+  function MyAspect(name, shortening, level) {
+    this.name = name;
+    this.shortening = shortening;
+    this.level = level;
+  }
+
+  // ------------ //
+  // private info //
+  // ------------ //
+  function MyEmpire() {
+    this.aspects = {
+      'army' : new MyAspect('Army','{S}',0),
+  	  'science' : new MyAspect('Science','[D]',0),
+  	  'production' : new MyAspect('Production','(G)',0),
+  	  'diplomacy' : new MyAspect('Diplomacy','#A#',0),
+  	  'growth' : new MyAspect('Growth','!P!',0),
+  	  'development' : new MyAspect('Development','>P>',0)
+    };
+  }
+
+  var myEmpire = new MyEmpire();
+
   const addParticipantsMessage = (data) => {
     var message = '';
     if (data.numUsers === 1) {
@@ -55,6 +80,13 @@ $(function() {
 
       // Tell the server your username
       socket.emit('add user', username);
+
+      updateAspects({'army':0,
+                     'science': 0,
+                     'production':0,
+                     'diplomcy':0,
+                     'growtch':0,
+                     'devlopment':0});
     }
   }
 
@@ -248,6 +280,18 @@ $(function() {
     return COLORS[index];
   }
 
+  const updateAspects = (stats) => {
+    console.log(stats);
+    console.log(myEmpire.aspects['army'].level);
+    myEmpire.aspects['army'].level = stats.army;
+    myEmpire.aspects['science'].level = stats.science;
+    myEmpire.aspects['production'].level = stats.production;
+    myEmpire.aspects['diplomacy'].level = stats.diplomacy;
+    myEmpire.aspects['growth'].level = stats.growth;
+    myEmpire.aspects['development'].level = stats.development;
+    $('#army_lvl').text(" " + myEmpire.aspects['army'].level);
+  }
+
   // Keyboard events
 
   $window.keydown(event => {
@@ -424,9 +468,41 @@ $(function() {
         }
     });
 
-});
+    socket.on('update empire', (stats) => {
+      updateAspects(stats);
+    });
+
+  });
+
+
 
 function arrayContains(needle, arrhaystack)
 {
     return (arrhaystack.indexOf(needle) > -1);
 }
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function addActionDiv(name)
+{
+  str = '<div id="action_div1">' +
+        '<div class="row content action-n-icon">' +
+        '<div class="col-md-6">' +
+        '<img src="img/'+name+'_icon.png" width="100" style="padding:20px;" /></div>' +
+        '<div class="col-md-6">'+capitalizeFirstLetter(name)+' level<span class="action-level-label" id="'+name+'_lvl"></span>' +
+        '<button type="button" class="btn btn-primary action-btn">Primary</button>' +
+        '<button type="button" class="btn btn-primary action-btn">Secondary</button>' +
+        '</div></div><div class="progress">' +
+        '<div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">10/30</div>' +
+        '</div></div>';
+    $('#actions').append(str);
+}
+
+addActionDiv('army');
+addActionDiv('science');
+addActionDiv('production');
+addActionDiv('diplomacy');
+addActionDiv('growth');
+addActionDiv('development');
