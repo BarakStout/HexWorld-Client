@@ -38,11 +38,12 @@ $(function() {
   // ------------ //
   // private info //
   // ------------ //
-  function MyAspect(name, shortening, level, quantity) {
+  function MyAspect(name, shortening, level, quantity, maxsize) {
     this.name = name;
     this.shortening = shortening;
     this.level = level;
     this.quantity = quantity;
+    this.maxsize = maxsize;
   }
 
   // ------------ //
@@ -50,12 +51,12 @@ $(function() {
   // ------------ //
   function MyEmpire() {
     this.aspects = {
-      'army' : new MyAspect('Army','{S}',0,0),
-  	  'science' : new MyAspect('Science','[D]',0,0),
-  	  'production' : new MyAspect('Production','(G)',0,0),
-  	  'diplomacy' : new MyAspect('Diplomacy','#A#',0,0),
-  	  'growth' : new MyAspect('Growth','!P!',0,0),
-  	  'development' : new MyAspect('Development','>P>',0,0)
+      'army' : new MyAspect('Army','{S}',0,0,10),
+  	  'science' : new MyAspect('Science','[D]',0,0,10),
+  	  'production' : new MyAspect('Production','(G)',0,0,10),
+  	  'diplomacy' : new MyAspect('Diplomacy','#A#',0,0,10),
+  	  'growth' : new MyAspect('Growth','!P!',0,0,10),
+  	  'development' : new MyAspect('Development','>P>',0,0,10)
     };
   }
 
@@ -86,7 +87,7 @@ $(function() {
       socket.emit('add user', username);
 
       updateAspects({'army': [0,5],
-                     'science': [0,0],
+                     'science': [0,10],
                      'production': [0,0],
                      'diplomacy': [0,0],
                      'growth': [0,0],
@@ -292,8 +293,12 @@ $(function() {
       myEmpire.aspects[aspect].quantity = stats[aspect][1];
       $('#'+aspect+'_lvl').text(" " + myEmpire.aspects[aspect].level);
       $('#'+aspect+'_progressbar')
-        .css('width', '' + (myEmpire.aspects[aspect].quantity/MAX_RESOURCE_QUANTITY*100) + '%')
-        .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(MAX_RESOURCE_QUANTITY));
+        .css('width', '' + (myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize*100) + '%')
+        .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
+      if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
+        $('#'+aspect+'_progressbar')
+          .css('background-color', 'red')
+          .css('color','white');
     }
 
   }

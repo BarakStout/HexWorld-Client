@@ -10,6 +10,10 @@
   margin-bottom: 10px;
 }
 
+#actions {
+		padding-left:10px;
+}
+
 .progress-bar{
 	color: #000000;
 }
