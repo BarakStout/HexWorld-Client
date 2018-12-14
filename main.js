@@ -29,7 +29,7 @@ $(function() {
 
   var socket = io();
 
-  var userList = [];
+  var userList = {};
 
   var silentMode = false;
   var quietMode = false;
@@ -303,6 +303,44 @@ $(function() {
 
   }
 
+  function updateUserTable(users)
+  {
+         userList = users[0];
+         $('#users').empty();
+         for(user in userList) { console.log(user);
+     			if(userList[user].username == username) {
+     				var row = '';
+     				row += '<tr class="leaderboard-user-row">';
+             row += '<td>'+userList[user].age+'</td>';
+     				row += '<td>'+userList[user].level+'</td>';
+     				row += '<td>'+userList[user].territory+'</td>';
+     				row += '<td>'+userList[user].username+'</td>';
+     				row += '</tr>';
+     				$('#users').append(row);
+
+     			}
+         }
+ 		for(user in userList) {
+ 			if(userList[user].username != username) {
+ 				var row = '';
+ 				row += '<tr>';
+         row += '<td>'+userList[user].age+'</td>';
+ 				row += '<td>'+userList[user].level+'</td>';
+ 				row += '<td>'+userList[user].territory+'</td>';
+ 				row += '<td>'+userList[user].username+'</td>';
+ 				row += '</tr>';
+ 				$('#users').append(row);
+ 			   }
+         }
+         $('#users > tr').click(
+             function(){
+               addToInput($(this).children('td')[3].innerHTML+' ');
+               console.log($(this).children('td'));
+             }
+         );
+
+  }
+
   // Keyboard events
 
   $window.keydown(event => {
@@ -348,6 +386,7 @@ $(function() {
     log(message, {
       prepend: true
     });
+    updateUserTable(data.userList);
     addParticipantsMessage(data);
 
 	});
@@ -450,41 +489,9 @@ $(function() {
     log('attempt to reconnect has failed');
   });
 
-   socket.on('update', function (users){
-        userList = users;
-        $('#users').empty();
-        for(var i=0; i<userList.length; i++) {
-    			if(userList[i].username == username) {
-    				var row = '';
-    				row += '<tr class="leaderboard-user-row">';
-            row += '<td>'+userList[i].age+'</td>';
-    				row += '<td>'+userList[i].level+'</td>';
-    				row += '<td>'+userList[i].territory+'</td>';
-    				row += '<td>'+userList[i].username+'</td>';
-    				row += '</tr>';
-    				$('#users').append(row);
-
-    			}
-        }
-		for(var i=0; i<userList.length; i++) {
-			if(userList[i].username != username) {
-				var row = '';
-				row += '<tr>';
-        row += '<td>'+userList[i].age+'</td>';
-				row += '<td>'+userList[i].level+'</td>';
-				row += '<td>'+userList[i].territory+'</td>';
-				row += '<td>'+userList[i].username+'</td>';
-				row += '</tr>';
-				$('#users').append(row);
-			   }
-        }
-        $('#users > tr').click(
-            function(){
-              addToInput($(this).children('td')[3].innerHTML+' ');
-              console.log($(this).children('td'));
-            }
-        );
-    });
+   socket.on('update', (data) => { console.log(data);
+     updateUserTable(data);
+   });
 
     socket.on('update empire', (stats) => {
       updateAspects(stats);
