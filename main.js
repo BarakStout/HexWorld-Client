@@ -86,12 +86,14 @@ $(function() {
       // Tell the server your username
       socket.emit('add user', username);
 
+      /*
       updateAspects({'army': [0,5],
                      'science': [0,10],
                      'production': [0,0],
                      'diplomacy': [0,0],
                      'growth': [0,0],
                      'development': [0,0]});
+      */
     }
   }
 
@@ -284,14 +286,20 @@ $(function() {
   }
 
   const updateAspects = (stats) => {
-    console.log(stats);
+    console.log(stats.data);
     for(i=0;i<ASPECT_NAMES.length;i++)
     {
       aspect = ASPECT_NAMES[i];
-      //console.log(aspect); console.log(stats[aspect]);
-      myEmpire.aspects[aspect].level = stats[aspect][0];
-      myEmpire.aspects[aspect].quantity = stats[aspect][1];
+      //console.log(aspect); console.log(stats.data['army'].level);
+      myEmpire.aspects[aspect].name = stats.data[aspect].name;
+      myEmpire.aspects[aspect].shortening = stats.data[aspect].shortening;
+      myEmpire.aspects[aspect].level = stats.data[aspect].level;
+      myEmpire.aspects[aspect].quantity = stats.data[aspect].quantity;
+      myEmpire.aspects[aspect].maxsize = stats.data[aspect].maxsize;
+
+
       $('#'+aspect+'_lvl').text(" " + myEmpire.aspects[aspect].level);
+      console.log(myEmpire.aspects);
       $('#'+aspect+'_progressbar')
         .css('width', '' + (myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize*100) + '%')
         .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
