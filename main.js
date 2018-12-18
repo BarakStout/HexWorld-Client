@@ -320,8 +320,8 @@ $(function() {
      				var row = '';
      				row += '<tr class="leaderboard-user-row">';
              row += '<td>'+userList[user].age+'</td>';
-     				row += '<td>'+userList[user].level+'</td>';
      				row += '<td>'+userList[user].territory+'</td>';
+     				row += '<td>'+userList[user].level+'</td>';
      				row += '<td>'+userList[user].username+'</td>';
      				row += '</tr>';
      				$('#users').append(row);
@@ -333,8 +333,8 @@ $(function() {
  				var row = '';
  				row += '<tr>';
          row += '<td>'+userList[user].age+'</td>';
- 				row += '<td>'+userList[user].level+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
+ 				row += '<td>'+userList[user].level+'</td>';
  				row += '<td>'+userList[user].username+'</td>';
  				row += '</tr>';
  				$('#users').append(row);
