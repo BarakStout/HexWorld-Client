@@ -523,15 +523,15 @@ $(function() {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-    function addActionDiv(name,primary,secondary)
+    function addActionDiv(name,primary,secondary,primaryText,secondaryText)
     {
       str = '<div id="action_div1">' +
             '<div class="row content action-n-icon">' +
             '<div class="col-md-5">' +
             '<img src="img/'+name+'_icon.png" width="100" style="padding:20px;" /></div>' +
             '<div class="col-md-7">'+capitalizeFirstLetter(name)+' <span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">Primary</button>' +
-            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">Secondary</button>' +
+            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">'+primaryText+'</button>' +
+            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
             '</div></div><div class="progress">' +
             '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div>';
