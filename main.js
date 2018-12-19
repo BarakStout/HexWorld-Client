@@ -546,12 +546,12 @@ $(function() {
       $currentInput.focus();
     }
 
-    addActionDiv('army','trai','figh');
-    addActionDiv('science','rese','disc');
-    addActionDiv('production','prod','trad');
-    addActionDiv('diplomacy','nego','trea');
-    addActionDiv('growth','gove','conq');
-    addActionDiv('development','inve','buil');
+    addActionDiv('army','trai','figh','Train','Fight');
+    addActionDiv('science','rese','disc','Research','Discover');
+    addActionDiv('production','prod','trad','Produce','Trade Deal');
+    addActionDiv('diplomacy','nego','trea','Negotiate','Treaty');
+    addActionDiv('growth','gove','conq','Govern','Conquer');
+    addActionDiv('development','inve','buil','Invest','Build');
 
 // end of file - DO NOT REMOVE!
 });
