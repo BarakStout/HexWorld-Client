@@ -307,6 +307,10 @@ $(function() {
         $('#'+aspect+'_progressbar')
           .css('background-color', 'red')
           .css('color','white');
+      else
+      $('#'+aspect+'_progressbar')
+        .css('background-color', 'blue')
+        .css('color','black');
     }
 
   }
