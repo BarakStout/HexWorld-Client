@@ -528,7 +528,7 @@ $(function() {
       str = '<div id="action_div1">' +
             '<div class="row content action-n-icon">' +
             '<div class="col-md-5">' +
-            '<img src="img/'+name+'_icon.png" width="100" style="padding:20px;" /></div>' +
+            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" /></div>' +
             '<div class="col-md-7">'+capitalizeFirstLetter(name)+' <span class="action-level-label" id="'+name+'_lvl"></span>' +
             '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">'+primaryText+'</button>' +
             '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
@@ -538,7 +538,8 @@ $(function() {
         $('#actions').append(str);
         $('#'+name+'_primary').click(function(){addToInput('#'+primary+' ')});
         $('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
-    }
+        $('#img_'+name).click(function(){addToInput(name)});
+     }
 
     function addToInput(msg)
     {
