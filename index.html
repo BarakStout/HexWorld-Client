@@ -16,12 +16,27 @@
 	<ul class="pages">
 		<li class="login page">
 			<div class="form">
-				<h3 class="title">What's your Empire's name?</h3>
+				<h3 class="title">What is your Empire's name?</h3>
 				<input class="usernameInput" type="text" maxlength="12" />
         <h3 id="loginerror" class="error-message" hidden>
-          Login Failed. Try a diffrent Empire name.
+          Login Failed. Try a different Empire name.
         </h3>
 			</div>
+      <div class="tutorial">
+        <font class="tutorial-suggest-text" color="white">
+          If this is your first time playing, we recommend the
+        </font>
+        <button class="btn btn-success" onClick=""> <!-- Start the tutorial -->
+          Tutorial!
+        </button>
+        <!-- TODO Once the tutorial is complete, remove this warning. -->
+        <font class="tutorial-suggest-text" color="white">
+         </br> !> UNDER CONSTRUCTION !<
+        </font>
+        <div class="tutorial-display">
+          <!-- the tutorial -->
+        </div>
+      </div>
 		</li>
 
 		<li class="chat page">
@@ -54,8 +69,8 @@
 					 <tr>
             <th>Turns</th>
 					   <th>=T=</th>
-					   <th>LV.</th>
-					   <th>Hex Name</th>
+					   <th>Lv.</th>
+					   <th>Empire Name</th>
 					 </tr>
 				   </thead>
 
