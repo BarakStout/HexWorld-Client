@@ -1,20 +1,6 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/lib/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css">
-
-    <title>HexWorld 2.0 Tutorial</title>
-  </head>
-  <body>
-    <!-- currently only a structure. TODO add styling-->
-    HexWorld Tutorial
-    <!-- Overall Game Desc -->
+    ## HexWorld Tutorial
+    
     HexWorld is a game about building a mighty Empire alongside other real players with similar goals.
     Conquer Territory from the world, upgrade, and grow to become the strongest Empire in the game.
     There is limited land in this world. Take it while you can, or destroy the weak to thieve theirs.
