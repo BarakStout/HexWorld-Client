@@ -1,6 +1,12 @@
 # HexWorld-Client
 Client code to connect to HewWorld server
 
+## Tutorial
+[Read the tutorial](tutorial.md)
+
+## LIVE Link
+[Play HexWorld](http://ec2-34-219-150-76.us-west-2.compute.amazonaws.com/)
+
 ## Installation
 
 1. Click on _Clone or download_
@@ -10,11 +16,6 @@ Client code to connect to HewWorld server
 5. Open _index.html_ with a web browser
 6. Type in the server's ip address
 7. Have fun!
-
-## How to Play HexWorld
-
-[short description]
-[link to full tutorial]
 
 ## Feedback
 

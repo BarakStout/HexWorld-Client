@@ -19,7 +19,8 @@ $(function() {
 
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
-
+  var $deadPage = $('.dead.page');
+$deadPage.hide();
   // Prompt for setting a username
   var username;
   var connected = false;
@@ -462,6 +463,11 @@ $(function() {
     socket.on('update empire', (stats) => {
       updateAspects(stats);
     });
+
+    socket.on('dead', () => {
+      $chatPage.fadeOut(4000);
+      $deadPage.fadeIn(4000);
+     } );
 
 
     function arrayContains(needle, arrhaystack)
