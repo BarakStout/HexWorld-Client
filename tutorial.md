@@ -3,7 +3,6 @@
 ## What is HexWorld?
 HexWorld is a game about building a mighty **Empire** alongside other real players with similar goals.  
 Conquer Territory from the world, upgrade, and grow to become the strongest **Empire** in the game.  
-There is limited land in this world. Take it while you can, or destroy the weak to thieve theirs.  
 You can be a warmonger, diplomat, traitor, defender, mercenary, hero: The HexWorld is open to anything.  
 ___
 ## How to Play
