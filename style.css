@@ -24,12 +24,12 @@
 form { background: #000; padding: 3px; width: 100%; }
 form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
 form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; height: 500px; border: 1px solid; }
-#messages li { padding: 5px 10px; }
+#messages { list-style-type: none; margin: 0; padding: 0; height: 400px; border: 1px solid; }
+#messages li { padding: 1px 5px; }
 #messages li:nth-child(odd) { background: #eee; }
 
-#notifications { list-style-type: none; margin: 0; padding: 0; height: 200px; border: 1px solid; }
-#notifications li { padding: 5px 10px; }
+#notifications { list-style-type: none; margin: 0; padding: 0; height: 400px; border: 1px solid; }
+#notifications li { padding: 1px 5px; }
 #notifications li:nth-child(odd) { background: #eee; }
 
 /* Fix user-agent */
@@ -134,7 +134,7 @@ ul {
 /* Font */
 
 .messages {
-  font-size: 150%;
+  font-size: 100%;
 }
 
 .inputMessage {
@@ -175,7 +175,7 @@ ul {
 }
 
 .notificationsBody {
-	display: block;
+	/*display: block;*/
 }
 
 .message.typing .messageBody {
