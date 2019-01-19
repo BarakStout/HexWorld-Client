@@ -137,7 +137,7 @@ $deadPage.hide();
   //  }
 
     var $usernameDiv = $('<span class="username"/>')
-      .text(data.username)
+      .text(timeNow() + " " + data.username)
       .css('color', getUsernameColor(data.username));
     var $messageBodyDiv = $('<span class="messageBody">')
       .text(data.message);
@@ -154,7 +154,7 @@ $deadPage.hide();
   const addNotificationsMessage = (data, options) => {
 
     var $usernameDiv = $('<span class="username"/>')
-      .text(data.username)
+      .text(timeNow() + " " + data.username)
       .css('color', getUsernameColor(data.username));
     var $messageBodyDiv = $('<span class="notificationsBody">')
       .html(data.message);
@@ -513,6 +513,15 @@ $deadPage.hide();
     addActionDiv('diplomacy','nego','trea','Negotiate','Treaty');
     addActionDiv('growth','gove','conq','Govern','Conquer');
     addActionDiv('development','inve','buil','Invest','Build');
+
+    //stack overflow
+    function timeNow() {
+      var d = new Date(),
+        h = (d.getHours()<10?'0':'') + d.getHours(),
+        m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+        s = (d.getSeconds()<10?'0':'') + d.getSeconds();
+      return h + ':' + m + ":" + s;
+    }
 
 // end of file - DO NOT REMOVE!
 });
