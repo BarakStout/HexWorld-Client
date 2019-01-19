@@ -129,12 +129,12 @@ $deadPage.hide();
 
     if(arrayContains(data.username,blockList)) return;
     // Don't fade the message in if there is an 'X was typing'
-    var $typingMessages = getTypingMessages(data);
+    //var $typingMessages = getTypingMessages(data);
     options = options || {};
-    if ($typingMessages.length !== 0) {
-      options.fade = false;
-      $typingMessages.remove();
-    }
+    //if ($typingMessages.length !== 0) {
+    //  options.fade = false;
+  //    $typingMessages.remove();
+  //  }
 
     var $usernameDiv = $('<span class="username"/>')
       .text(data.username)
@@ -144,7 +144,7 @@ $deadPage.hide();
 
     var $messageDiv = $('<li class="message"/>')
       .data('username', data.username)
-      .addClass(typingClass)
+      //.addClass(typingClass)
       .append($usernameDiv, $messageBodyDiv);
 
     addMessageElement($messageDiv, options);
@@ -160,7 +160,7 @@ $deadPage.hide();
       .html(data.message);
     var $messageDiv = $('<li class="notification	"/>')
       .data('username', data.username)
-      .addClass(typingClass)
+      //.addClass(typingClass)
       .append($usernameDiv, $messageBodyDiv);
 
     addNotificationsElement($messageDiv, options);
@@ -337,9 +337,9 @@ $deadPage.hide();
     }
   });
 
-  $inputMessage.on('input', () => {
-    updateTyping();
-  });
+  // $inputMessage.on('input', () => {
+  //   updateTyping();
+  // });
 
   // Click events
 
