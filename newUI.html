@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>HexWorld 2.0 Client</title>
+  </head>
+  <body>
+    <h1>Hello</h1>
+    <div class="container">
+      <div class="corner-left"><span>LVL. 3</span></div>
+      <div class="corner-right"><span>Upgrade</span></div>
+      <div class="progress">' +
+        <div id="progressbar" class="progress-bar" role="progressbar" style="width:10%;">0/1,000</div>
+      </div>
+
+</div>
+
+    <style>
+    .progress{width:100%;
+    }
+    .container {
+      width: 250px;
+      height: 250px;
+      position:relative;
+      background-color:grey;
+      display: -webkit-box;
+      }
+
+      .corner-right {
+      width: 0;
+      height: 0;
+      border-top: 150px solid #ff0000;
+      border-bottom: 150px solid transparent;
+      border-left: 150px solid transparent;
+      position:absolute;
+      right:0;
+      }
+
+      .corner-right span {
+      position:absolute;
+      top: -110px;
+      width: 100px;
+      left: -100px;
+      text-align: center;
+      font-size: 16px;
+      font-family: arial;
+      transform: rotate(45deg);
+      display:block;
+      }
+
+
+    .corner-left {
+  width: 0;
+	height: 0;
+	border-top: 150px solid #ff0000;
+	border-bottom: 150px solid transparent;
+	border-right: 150px solid transparent;
+}
+
+.corner-left span {
+  position:absolute;
+  top: 35px;
+  width: 100px;
+  left: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-family: arial;
+  transform: rotate(-45deg);
+}
+
+    </style>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+
+<script>
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+var MAX_RESOURCE_QUANTITY = 10;
+function addActionDiv(name,primary,secondary,primaryText,secondaryText)
+{
+  str = '<div id="action_div2">' +
+        '<div class="row content action-n-icon">' +
+        '<div class="col-md-5">' +
+        '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" /></div>' +
+        '<div class="col-md-7">'+capitalizeFirstLetter(name)+' <span class="action-level-label" id="'+name+'_lvl"></span>' +
+        '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">'+primaryText+'</button>' +
+        '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
+        '</div></div><div class="progress">' +
+        '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
+        '</div></div>';
+    $('#actions').append(str);
+    $('#'+name+'_primary').click(function(){addToInput('#'+primary+' ')});
+    $('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
+    $('#img_'+name).click(function(){addToInput(name)});
+ }
+ addActionDiv("army","primary","secondary","pri1","pri2");
+
+  </script>
+
+</body>
+</html>
