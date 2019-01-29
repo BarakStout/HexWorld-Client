@@ -265,15 +265,14 @@ $deadPage.hide();
 
       $('#'+aspect+'_lvl').text(" " + myEmpire.aspects[aspect].level);
       console.log(myEmpire.aspects);
-      $('#'+aspect+'_progressbar')
-        .css('width', '' + (myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize*100) + '%')
+      $('#'+aspect+'_progress')
         .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
       if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
-        $('#'+aspect+'_progressbar')
+        $('.'+aspect+'_div')
           .css('background-color', 'red')
           .css('color','white');
       else
-      $('#'+aspect+'_progressbar')
+      $('.'+aspect+'_div')
         .css('background-color', '#6287ec')
         .css('color','black');
     }
@@ -485,20 +484,21 @@ $deadPage.hide();
 
     function addActionDiv(name,primary,secondary,primaryText,secondaryText)
     {
-      str = '<div id="action_div1">' +
+      str = '<div id="action_div1" class="'+name+'_div">' +
             '<div class="row content action-n-icon">' +
-            '<div class="col-md-5">' +
-            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" /></div>' +
-            '<div class="col-md-7">'+capitalizeFirstLetter(name)+' <span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_primary">'+primaryText+'</button>' +
-            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
-            '</div></div><div class="progress">' +
-            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
-            '</div></div>';
+            '<div class="col-md-12">' +
+            '<span class="action-level-label" id="'+name+'_lvl"></span>' +
+            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" />'+
+            '<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
+//            '<div class="col-md-7">'+capitalizeFirstLetter(name)+ +
+//            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
+//          '</div></div><div class="progress">' +
+//            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
+            '</div></div></div>';
         $('#actions').append(str);
         $('#'+name+'_primary').click(function(){addToInput('#'+primary+' ')});
         $('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
-        $('#img_'+name).click(function(){addToInput(name)});
+        $('#img_'+name).click(function(){addToInput('#'+primary+' ')});
      }
 
     function addToInput(msg)
