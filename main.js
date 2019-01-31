@@ -286,7 +286,7 @@ $deadPage.hide();
          for(user in userList) { console.log(user);
      			if(userList[user].username == username) {
      				var row = '';
-     				row += '<tr class="leaderboard-user-row">';
+     				row += '<tr class="leaderboard-user-row"><td></td>';
              row += '<td>'+userList[user].age+'</td>';
      				row += '<td>'+userList[user].territory+'</td>';
      				row += '<td>'+userList[user].level+'</td>';
@@ -300,6 +300,13 @@ $deadPage.hide();
  			if(userList[user].username != username) {
  				var row = '';
  				row += '<tr>';
+        row += '<td><button type="button" class="btn btn-success btn-action-list">'+'+'+'</button>';
+        row += '<div class="dropdown-content action-nav"><ul class="action-nav-div">' +
+          '<li id="fight">Fight</li>' +
+          '<li id="tradedeal">Trade Deal</li>' +
+          '<li id="treaty">Treaty</li>' +
+          '<li id="sendResources">Send Resources</li>' +
+          '</ul></div></td>';
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
  				row += '<td>'+userList[user].level+'</td>';
@@ -308,12 +315,13 @@ $deadPage.hide();
  				$('#users').append(row);
  			   }
          }
-         $('#users > tr').click(
-             function(){
-               addToInput($(this).children('td')[3].innerHTML+' ');
-               console.log($(this).children('td'));
-             }
-         );
+         $('#fight').click(function(){alert('hi');});
+         // $('#users > tr').click(
+         //     function(){
+         //       addToInput($(this).children('td')[3].innerHTML+' ');
+         //       console.log($(this).children('td'));
+         //     }
+         // );
 
   }
 

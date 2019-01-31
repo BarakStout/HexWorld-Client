@@ -226,3 +226,40 @@ ul {
   margin-bottom: 10px;
   border-bottom: 1px solid;
 }
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Show the dropdown menu on hover */
+.btn-action-list:hover + .dropdown-content, .dropdown-content:hover {display: block;}
+
+/* for action dropdown */
+.action-nav-div{      padding-inline-start: 10px;
+}
+.action-nav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+}
+
+.action-nav li{
+  display: block;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+}
+
+/* Change the link color on hover */
+.action-nav li:hover {
+  background-color: #555;
+  color: white;
+}
