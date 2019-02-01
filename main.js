@@ -302,10 +302,10 @@ $deadPage.hide();
  				row += '<tr>';
         row += '<td><button type="button" class="btn btn-success btn-action-list">'+'+'+'</button>';
         row += '<div class="dropdown-content action-nav"><ul class="action-nav-div">' +
-          '<li id="fight">Fight</li>' +
-          '<li id="tradedeal">Trade Deal</li>' +
-          '<li id="treaty">Treaty</li>' +
-          '<li id="sendResources">Send Resources</li>' +
+          '<li class="fight" data-target="'+user+'">Fight</li>' +
+          '<li class="tradedeal" data-target="'+user+'">Trade Deal</li>' +
+          '<li class="treaty" data-target="'+user+'">Treaty</li>' +
+          '<li class="sendResources">Send Resources</li>' +
           '</ul></div></td>';
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
@@ -315,14 +315,21 @@ $deadPage.hide();
  				$('#users').append(row);
  			   }
          }
-         $('#fight').click(function(){alert('hi');});
-         // $('#users > tr').click(
-         //     function(){
-         //       addToInput($(this).children('td')[3].innerHTML+' ');
-         //       console.log($(this).children('td'));
-         //     }
-         // );
-
+         $('.fight').click(
+           function(){
+             message = '#figh ' + $(this).attr('data-target');
+             socket.emit('new message', {username, message });
+           });
+         $('.tradedeal').click(
+           function(){
+             message = '#trad ' + $(this).attr('data-target');
+             socket.emit('new message', {username, message });
+           });
+         $('.treaty').click(
+           function(){
+             message = '#trea ' + $(this).attr('data-target');
+             socket.emit('new message', {username, message });
+           });
   }
 
   // Keyboard events
@@ -496,7 +503,7 @@ $deadPage.hide();
             '<div class="row content action-n-icon">' +
             '<div class="col-md-12">' +
             '<span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" />'+
+            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
             '<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
 //            '<div class="col-md-7">'+capitalizeFirstLetter(name)+ +
 //            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
