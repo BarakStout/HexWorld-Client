@@ -511,9 +511,14 @@ $deadPage.hide();
 //            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div></div>';
         $('#actions').append(str);
-        $('#'+name+'_primary').click(function(){addToInput('#'+primary+' ')});
-        $('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
-        $('#img_'+name).click(function(){addToInput('#'+primary+' ')});
+        $('#img_'+name).click(
+          function(){
+            message = '#'+primary+' ';
+            socket.emit('new message', {username, message });
+          });
+
+        //$('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
+        //$('#img_'+name).click(function(){addToInput('#'+primary+' ')});
      }
 
     function addToInput(msg)
