@@ -78,11 +78,11 @@ ul {
 
 /* Login Page */
 
-.login.page, .dead.page {
+.login.page, .dead.page, .sendgoods.page {
   background-color: #000;
 }
 
-.login.page .form, .dead.page .form {
+.login.page .form, .dead.page .form, .sendgoods.page .form {
   height: 100px;
   margin-top: -100px;
   position: absolute;
@@ -92,7 +92,7 @@ ul {
   width: 100%;
 }
 
-.login.page .form .usernameInput {
+.login.page .form .usernameInput, .sendgoods.page .form .sendgoods {
   background-color: transparent;
   border: none;
   border-bottom: 2px solid #fff;
@@ -102,16 +102,16 @@ ul {
   width: 400px;
 }
 
-.login.page .title {
+.login.page .title, .sendgoods.page .title {
   font-size: 200%;
 }
 
-.login.page .usernameInput {
+.login.page .usernameInput, .sendgoods.page .sendgoods {
   font-size: 200%;
   letter-spacing: 3px;
 }
 
-.login.page .title, .login.page .usernameInput {
+.login.page .title, .login.page .usernameInput, .sendgoods.page .title, .sendgoods.page .sendgoods {
   color: #fff;
   font-weight: 100;
 }

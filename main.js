@@ -19,8 +19,11 @@ $(function() {
 
   var $loginPage = $('.login.page'); // The login page
   var $chatPage = $('.chat.page'); // The chatroom page
-  var $deadPage = $('.dead.page');
-$deadPage.hide();
+  var $deadPage = $('.dead.page'); // dead pages
+  var $sendGoodsPage = $('.sendgoods.page'); // send goods
+  $sendGoodsPage.hide();
+  $deadPage.hide();
+
   // Prompt for setting a username
   var username;
   var connected = false;
@@ -305,7 +308,7 @@ $deadPage.hide();
           '<li class="fight" data-target="'+user+'">Fight</li>' +
           '<li class="tradedeal" data-target="'+user+'">Trade Deal</li>' +
           '<li class="treaty" data-target="'+user+'">Treaty</li>' +
-          '<li class="sendResources">Send Resources</li>' +
+          '<li class="sendResources" data-target="'+user+'">Send Resources</li>' +
           '</ul></div></td>';
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
@@ -330,6 +333,23 @@ $deadPage.hide();
              message = '#trea ' + $(this).attr('data-target');
              socket.emit('new message', {username, message });
            });
+        $('.sendResources').click(
+          function(){
+            message = '/give ' + $(this).attr('data-target') + ' ' +
+              $('#sendgoodsType').val() + ' ' +
+              $('#sendgoodsQty').val();
+            $chatPage.fadeOut();
+            $sendGoodsPage.fadeIn();
+            $('#sendResources').click(
+              function() {
+                console.log(message);
+                socket.emit('new message', {username, message });
+                $sendGoodsPage.fadeOut();
+                $chatPage.fadeIn();
+              }
+            )
+          }
+        );
   }
 
   // Keyboard events
