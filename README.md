@@ -5,7 +5,7 @@ Client code to connect to HewWorld server
 [Read the tutorial](tutorial.md)
 
 ## LIVE Link
-Click to [Play HexWorld](http://HexWorld.io/) or visit [HexWorld.io]((http://HexWorld.io/)
+Click to [Play HexWorld](http://HexWorld.io/) or visit [HexWorld.io](http://HexWorld.io/)
 
 ## Installation
 
