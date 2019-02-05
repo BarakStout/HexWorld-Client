@@ -269,7 +269,10 @@ $(function() {
       $('#'+aspect+'_lvl').text(" " + myEmpire.aspects[aspect].level);
       console.log(myEmpire.aspects);
       $('#'+aspect+'_progress')
-        .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
+        //.html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
+        .attr('data-progress',100*myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize)
+        .attr('data-value', myEmpire.aspects[aspect].quantity);
+      $('#'+aspect+'_maxsize').html(myEmpire.aspects[aspect].maxsize);
       if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
         $('.'+aspect+'_div')
           //.css('background-color', 'red')
@@ -533,9 +536,11 @@ $(function() {
             '<div class="row content action-n-icon">' +
             '<div class="col-md-12">' +
             '<span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<span class="float" id="lvlup_'+name+'">!</span>'+
+            '<span class="float" id="lvlup_'+name+'"><span class="glyphicon glyphicon-plus"></span></span>'+
             //'<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
-            '<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
+            //'<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
+            '<div class="progress-circle" id="'+name+'_progress" data-progress="0" data-value="0" data-maxvalue="10">'+
+            '<span class="tooltiptext" id="'+name+'_maxsize">10</span></div>'+
             '<span class="float_bottom" id="upgrade_'+name+'">?</span>'+
 
 //            '<div class="col-md-7">'+capitalizeFirstLetter(name)+ +
@@ -549,7 +554,7 @@ $(function() {
             event.stopPropagation(); // DO NOT REMOVE
             console.log("lvl up");
           });
-        $('#upgrade'+name).click(
+        $('#upgrade_'+name).click(
           function(){
             event.stopPropagation(); // DO NOT REMOVE
             console.log("upgrade");
