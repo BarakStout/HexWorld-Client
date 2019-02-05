@@ -5,7 +5,7 @@ Client code to connect to HewWorld server
 [Read the tutorial](tutorial.md)
 
 ## LIVE Link
-[Play HexWorld](http://ec2-35-165-185-142.us-west-2.compute.amazonaws.com/)
+[Play HexWorld](http://ec2-54-187-181-149.us-west-2.compute.amazonaws.com/)
 
 ## Installation
 
