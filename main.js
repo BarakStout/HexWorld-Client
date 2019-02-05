@@ -534,7 +534,6 @@ $(function() {
             '<div class="col-md-12">' +
             '<span class="action-level-label" id="'+name+'_lvl"></span>' +
             '<span class="float" id="lvlup_'+name+'">!</span>'+
-
             //'<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
             '<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
             '<span class="float_bottom" id="upgrade_'+name+'">?</span>'+
@@ -548,7 +547,12 @@ $(function() {
         $('#lvlup_'+name).click(
           function(){
             event.stopPropagation(); // DO NOT REMOVE
-            console.log("hi");
+            console.log("lvl up");
+          });
+        $('#upgrade'+name).click(
+          function(){
+            event.stopPropagation(); // DO NOT REMOVE
+            console.log("upgrade");
           });
         $('.'+name+'_div')
           .css('background-image', 'url(img/'+name+'_icon.png)')
