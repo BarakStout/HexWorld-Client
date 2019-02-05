@@ -272,14 +272,20 @@ $(function() {
         .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
       if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
         $('.'+aspect+'_div')
-          .css('background-color', 'red')
+          //.css('background-color', 'red')
           .css('color','white');
       else
       $('.'+aspect+'_div')
-        .css('background-color', '#6287ec')
+        //.css('background-color', '#6287ec')
         .css('color','black');
     }
 
+  }
+
+  const addToInput = (msg) =>
+  {
+    $('#input').val($('#input').val() + msg);
+    $currentInput.focus();
   }
 
   function updateUserTable(users)
@@ -313,11 +319,15 @@ $(function() {
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
  				row += '<td>'+userList[user].level+'</td>';
- 				row += '<td>'+userList[user].username+'</td>';
+ 				row += '<td class="userName" id="'+user+'">'+userList[user].username+'</td>';
  				row += '</tr>';
  				$('#users').append(row);
  			   }
          }
+         $('.userName').click(
+           function(){
+             addToInput('/whisper ' + $(this).attr('id') + ' ');
+           });
          $('.fight').click(
            function(){
              message = '#figh ' + $(this).attr('data-target');
@@ -523,29 +533,38 @@ $(function() {
             '<div class="row content action-n-icon">' +
             '<div class="col-md-12">' +
             '<span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
+            '<span class="float" id="lvlup_'+name+'">!</span>'+
+
+            //'<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
             '<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
+            '<span class="float_bottom" id="upgrade_'+name+'">?</span>'+
+
 //            '<div class="col-md-7">'+capitalizeFirstLetter(name)+ +
 //            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
 //          '</div></div><div class="progress">' +
 //            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div></div>';
         $('#actions').append(str);
-        $('#img_'+name).click(
+        $('#lvlup_'+name).click(
           function(){
-            message = '#'+primary+' ';
-            socket.emit('new message', {username, message });
+            event.stopPropagation(); // DO NOT REMOVE
+            console.log("hi");
           });
+        $('.'+name+'_div')
+          .css('background-image', 'url(img/'+name+'_icon.png)')
+          .css('background-size', 'cover')
+          .css('background-color', 'rgba(255, 255, 255, 0.4)')
+          .click(
+            function(){
+              message = '#'+primary+' ';
+              socket.emit('new message', {username, message });
+            });
 
         //$('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
         //$('#img_'+name).click(function(){addToInput('#'+primary+' ')});
      }
 
-    function addToInput(msg)
-    {
-      $('#input').val($('#input').val() + msg);
-      $currentInput.focus();
-    }
+
 
     addActionDiv('army','trai','figh','Train','Fight');
     addActionDiv('science','rese','disc','Research','Discover');

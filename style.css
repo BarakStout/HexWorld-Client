@@ -7,7 +7,7 @@
 }
 
 #actions {
-		padding-left:10px;
+		padding:10px;
 }
 
 .progress-bar{
@@ -52,6 +52,7 @@ html, input {
 
 html, body {
   height: 100%;
+  overflow:hidden;
   margin: 0;
   padding: 0;
 }
@@ -207,24 +208,24 @@ ul {
 }
 
 .action-level-label {
-  position: absolute;
   width: 100px;
   left: -10px;
   text-align: center;
   font-size: 16px;
   font-family: arial;
-  display: block;
 }
 
 .action-progress-label {
-  display: -webkit-box;
   margin-left: 15px;
-  margin-top: -15px;
+  bottom: 0;
+  display: -webkit-box;
+  margin: 0;
+  position: absolute;
 }
 
 #action_div1 {
   margin-bottom: 10px;
-  border-bottom: 1px solid;
+  height: 15vh;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -263,3 +264,37 @@ ul {
   background-color: #555;
   color: white;
 }
+
+.col-md-1
+{
+  padding-right: 0px;
+}
+
+.float{
+	position:absolute;
+	width:30px;
+	height:30px;
+	right:0px;
+  z-index: 3;
+	background-color: red;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.float_bottom{
+	position:absolute;
+	width:30px;
+	height:30px;
+	right:0px;
+  bottom: 10px;
+  z-index: 4;
+	background-color: green;
+	color:#FFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+
+.row{height: 100%;}
