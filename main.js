@@ -270,18 +270,89 @@ $(function() {
       console.log(myEmpire.aspects);
       $('#'+aspect+'_progress')
         //.html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
-        .attr('data-progress',100*myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize)
+        .attr('data-progress',Math.floor(100*myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize))
         .attr('data-value', myEmpire.aspects[aspect].quantity);
       $('#'+aspect+'_maxsize').html(myEmpire.aspects[aspect].maxsize);
-      if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
-        $('.'+aspect+'_div')
-          //.css('background-color', 'red')
-          .css('color','white');
-      else
-      $('.'+aspect+'_div')
-        //.css('background-color', '#6287ec')
-        .css('color','black');
+      // if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
+      //   $('.'+aspect+'_div')
+      //     //.css('background-color', 'red')
+      //     .css('color','white');
+      // else
+      // $('.'+aspect+'_div')
+      //   //.css('background-color', '#6287ec')
+      //   .css('color','black');
     }
+    for(i=0;i<ASPECT_NAMES.length;i++)
+    {
+      aspect = ASPECT_NAMES[i];
+    if(myEmpire.aspects['science'].quantity == myEmpire.aspects['science'].maxsize)
+      $('#lvlup_'+aspect).show();
+    else
+      $('#lvlup_'+aspect).hide();
+    if(myEmpire.aspects['development'].quantity == myEmpire.aspects['development'].maxsize)
+      $('#upgrade_'+aspect).show();
+    else
+      $('#upgrade_'+aspect).hide();
+    }
+
+    // background opacity
+    console.log(myEmpire.aspects['production'].quantity);
+    if(myEmpire.aspects['production'].quantity > 0)
+    {
+      $('.army_div').css('opacity', 1);
+      $('.science_div').css('opacity', 1);
+      $('.development_div').css('opacity', 1);
+    } else {
+      $('.army_div').css('opacity', 0.4);
+      $('.science_div').css('opacity', 0.4);
+      $('.development_div').css('opacity', 0.4);
+    }
+
+    //hide actions the user cannot do
+    if(myEmpire.aspects['army'].quantity > 0 )
+    {
+      $('.fight').show();
+      showUserActions = true;
+    }
+    else $('.fight').hide();
+
+    if(myEmpire.aspects['production'].quantity >= 10 &&
+       myEmpire.aspects['diplomacy'].quantity >= 10 &&
+       myEmpire.aspects['growth'].quantity >= 10) {
+       {
+         $('.tradedeal').show();
+         showUserActions = true;
+       }
+   } else {
+     $('.tradedeal').hide();
+   }
+
+   for(user in userList) {
+     if(myEmpire.aspects['diplomacy'].quantity >= userList[user].territory)
+     {
+       $('.treaty').show();
+       showUserActions = true;
+     }
+     else
+       $('.treaty').hide();
+   }
+
+   if(myEmpire.aspects['army'].quantity > 0 ||
+      myEmpire.aspects['science'].quantity > 0 ||
+      myEmpire.aspects['production'].quantity > 0 ||
+      myEmpire.aspects['diplomacy'].quantity > 0 ||
+      myEmpire.aspects['growth'].quantity > 0 ||
+      myEmpire.aspects['development'].quantity > 0)
+      {
+        $('.sendResources').show();
+        showUserActions = true;
+        console.log('HERE');
+      }
+      else
+       $('.sendResources').hide();
+
+     if(!showUserActions) $('.btn-action-list').hide();
+     else $('.btn-action-list').show();
 
   }
 
@@ -308,6 +379,7 @@ $(function() {
 
      			}
          }
+          showUserActions = false;
  		for(user in userList) {
  			if(userList[user].username != username) {
  				var row = '';
@@ -318,6 +390,7 @@ $(function() {
           '<li class="tradedeal" data-target="'+user+'">Trade Deal</li>' +
           '<li class="treaty" data-target="'+user+'">Treaty</li>' +
           '<li class="sendResources" data-target="'+user+'">Send Resources</li>' +
+          '<li class="privatemsg" data-target="'+user+'">Private Message</li>' +
           '</ul></div></td>';
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
@@ -326,7 +399,8 @@ $(function() {
  				row += '</tr>';
  				$('#users').append(row);
  			   }
-         }
+      }
+
          $('.userName').click(
            function(){
              addToInput('/whisper ' + $(this).attr('id') + ' ');
@@ -511,7 +585,8 @@ $(function() {
       updateAspects(stats);
     });
 
-    socket.on('dead', () => {
+    socket.on('dead', (data) => {
+      $('#killer').html("Your empire was destroyed by " + data.bywhom);
       $chatPage.fadeOut(4000);
       $deadPage.fadeIn(4000);
      } );
@@ -549,20 +624,28 @@ $(function() {
 //            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div></div>';
         $('#actions').append(str);
+        if(name == 'army' || name == 'science' || name == 'development')
+          $('.'+name+'_div').css('opacity', 0.4);
+        $('#lvlup_'+name).hide();
+        $('#upgrade_'+name).hide();
         $('#lvlup_'+name).click(
           function(){
             event.stopPropagation(); // DO NOT REMOVE
             console.log("lvl up");
+            message = '#disc ' + name;
+            socket.emit('new message', {username, message });
           });
         $('#upgrade_'+name).click(
           function(){
             event.stopPropagation(); // DO NOT REMOVE
             console.log("upgrade");
+            message = '#buil ' + name;
+            socket.emit('new message', {username, message });
           });
         $('.'+name+'_div')
           .css('background-image', 'url(img/'+name+'_icon.png)')
           .css('background-size', 'cover')
-          .css('background-color', 'rgba(255, 255, 255, 0.4)')
+          .css('background-color', 'rgba(238, 238, 238, 0.4)')
           .click(
             function(){
               message = '#'+primary+' ';
