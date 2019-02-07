@@ -269,17 +269,100 @@ $(function() {
       $('#'+aspect+'_lvl').text(" " + myEmpire.aspects[aspect].level);
       console.log(myEmpire.aspects);
       $('#'+aspect+'_progress')
-        .html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
-      if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
-        $('.'+aspect+'_div')
-          .css('background-color', 'red')
-          .css('color','white');
-      else
-      $('.'+aspect+'_div')
-        .css('background-color', '#6287ec')
-        .css('color','black');
+        //.html(numberWithCommas(myEmpire.aspects[aspect].quantity)+'/'+numberWithCommas(myEmpire.aspects[aspect].maxsize));
+        .attr('data-progress',Math.floor(100*myEmpire.aspects[aspect].quantity/myEmpire.aspects[aspect].maxsize))
+        .attr('data-value', myEmpire.aspects[aspect].quantity);
+      $('#'+aspect+'_maxsize').html(myEmpire.aspects[aspect].maxsize);
+      // if(myEmpire.aspects[aspect].quantity==myEmpire.aspects[aspect].maxsize)
+      //   $('.'+aspect+'_div')
+      //     //.css('background-color', 'red')
+      //     .css('color','white');
+      // else
+      // $('.'+aspect+'_div')
+      //   //.css('background-color', '#6287ec')
+      //   .css('color','black');
+    }
+    for(i=0;i<ASPECT_NAMES.length;i++)
+    {
+      aspect = ASPECT_NAMES[i];
+    if(myEmpire.aspects['science'].quantity == myEmpire.aspects['science'].maxsize)
+      $('#lvlup_'+aspect).show();
+    else
+      $('#lvlup_'+aspect).hide();
+    if(myEmpire.aspects['development'].quantity == myEmpire.aspects['development'].maxsize)
+      $('#upgrade_'+aspect).show();
+    else
+      $('#upgrade_'+aspect).hide();
     }
 
+    // background opacity
+    console.log(myEmpire.aspects['production'].quantity);
+    if(myEmpire.aspects['production'].quantity > 0)
+    {
+      $('.army_div').css('opacity', 1);
+      $('.science_div').css('opacity', 1);
+      $('.development_div').css('opacity', 1);
+    } else {
+      $('.army_div').css('opacity', 0.4);
+      $('.science_div').css('opacity', 0.4);
+      $('.development_div').css('opacity', 0.4);
+    }
+
+    //hide actions the user cannot do
+    if(myEmpire.aspects['army'].quantity > 0 )
+    {
+      $('.fight').show();
+      showUserActions = true;
+    }
+    else $('.fight').hide();
+
+    if(myEmpire.aspects['production'].quantity >= 10 &&
+       myEmpire.aspects['diplomacy'].quantity >= 10 &&
+       myEmpire.aspects['growth'].quantity >= 10) {
+       {
+         $('.tradedeal').show();
+         showUserActions = true;
+       }
+   } else {
+     $('.tradedeal').hide();
+   }
+
+   for(user in userList) {
+     if(myEmpire.aspects['diplomacy'].quantity >= userList[user].territory)
+     {
+       $('.treaty').show();
+       showUserActions = true;
+     }
+     else
+       $('.treaty').hide();
+   }
+
+   if(myEmpire.aspects['army'].quantity > 0 ||
+      myEmpire.aspects['science'].quantity > 0 ||
+      myEmpire.aspects['production'].quantity > 0 ||
+      myEmpire.aspects['diplomacy'].quantity > 0 ||
+      myEmpire.aspects['growth'].quantity > 0 ||
+      myEmpire.aspects['development'].quantity > 0)
+      {
+        $('.sendResources').show();
+        showUserActions = true;
+        console.log('HERE');
+      }
+      else
+       $('.sendResources').hide();
+
+     if(!showUserActions) $('.btn-action-list').hide();
+     else $('.btn-action-list').show();
+
+     if(myEmpire.aspects['growth'].quantity >= 10) $('#conquer').show();
+     else $('#conquer').hide();
+
+  }
+
+  const addToInput = (msg) =>
+  {
+    $('#input').val($('#input').val() + msg);
+    $currentInput.focus();
   }
 
   function updateUserTable(users)
@@ -299,11 +382,12 @@ $(function() {
 
      			}
          }
+          showUserActions = false;
  		for(user in userList) {
  			if(userList[user].username != username) {
  				var row = '';
  				row += '<tr>';
-        row += '<td><button type="button" class="btn btn-success btn-action-list">'+'+'+'</button>';
+        row += '<td><button type="button" class="btn btn-success btn-action-list">'+'<i class="fas fa-caret-down"></i>'+'</button>';
         row += '<div class="dropdown-content action-nav"><ul class="action-nav-div">' +
           '<li class="fight" data-target="'+user+'">Fight</li>' +
           '<li class="tradedeal" data-target="'+user+'">Trade Deal</li>' +
@@ -313,11 +397,16 @@ $(function() {
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
  				row += '<td>'+userList[user].level+'</td>';
- 				row += '<td>'+userList[user].username+'</td>';
+ 				row += '<td class="userName" id="'+user+'">'+userList[user].username+'</td>';
  				row += '</tr>';
  				$('#users').append(row);
  			   }
-         }
+      }
+
+         $('.userName').click(
+           function(){
+             addToInput('/whisper ' + $(this).attr('id') + ' ');
+           });
          $('.fight').click(
            function(){
              message = '#figh ' + $(this).attr('data-target');
@@ -498,7 +587,8 @@ $(function() {
       updateAspects(stats);
     });
 
-    socket.on('dead', () => {
+    socket.on('dead', (data) => {
+      $('#killer').html("Your empire was destroyed by " + data.bywhom);
       $chatPage.fadeOut(4000);
       $deadPage.fadeIn(4000);
      } );
@@ -519,33 +609,69 @@ $(function() {
 
     function addActionDiv(name,primary,secondary,primaryText,secondaryText)
     {
-      str = '<div id="action_div1" class="'+name+'_div">' +
-            '<div class="row content action-n-icon">' +
+      str = '<span class="float" id="lvlup_'+name+'"><i class="fas fa-angle-double-up"></i></span>'+
+            '<span class="float_bottom" id="upgrade_'+name+'"><i class="fas fa-plus"></i></span>'+
+            '<div id="action_div1" class="'+name+'_div">' +
+            '<div class="row content action-n-icon '+name+'_div_row">' +
             '<div class="col-md-12">' +
-            '<span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
-            '<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
+            '<span class="action-level-label" id="'+name+'_lvl"></span>' +            //'<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
+            //'<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
+            '<div class="progress-circle" id="'+name+'_progress" data-progress="0" data-value="0" data-maxvalue="10">'+
+            '<span class="tooltiptext" id="'+name+'_maxsize">10</span></div>'+
+
+
 //            '<div class="col-md-7">'+capitalizeFirstLetter(name)+ +
 //            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
 //          '</div></div><div class="progress">' +
 //            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div></div>';
+        if(name == 'growth')
+          str = '<span class="float_middle" id="conquer"><i class="fas fa-exclamation"></i></span>'+str;
         $('#actions').append(str);
-        $('#img_'+name).click(
+        if(name == 'army' || name == 'science' || name == 'development')
+          $('.'+name+'_div').css('opacity', 0.4);
+        $('#conquer').hide();
+        $('#lvlup_'+name).hide();
+        $('#upgrade_'+name).hide();
+
+        $('#conquer').click(
           function(){
-            message = '#'+primary+' ';
+            event.stopPropagation(); // DO NOT REMOVE
+            console.log("conquer");
+            message = '#conq';
+            socket.emit('new message', {username, message });
+          }
+        )
+
+        $('#lvlup_'+name).click(
+          function(){
+            event.stopPropagation(); // DO NOT REMOVE
+            console.log("lvl up");
+            message = '#disc ' + name;
             socket.emit('new message', {username, message });
           });
+        $('#upgrade_'+name).click(
+          function(){
+            event.stopPropagation(); // DO NOT REMOVE
+            console.log("upgrade");
+            message = '#buil ' + name;
+            socket.emit('new message', {username, message });
+          });
+        $('.'+name+'_div')
+          .css('background-image', 'url(img/'+name+'_icon.png)')
+          .css('background-size', 'cover')
+          .css('background-color', 'rgba(238, 238, 238, 0.4)')
+          .click(
+            function(){
+              message = '#'+primary+' ';
+              socket.emit('new message', {username, message });
+            });
 
         //$('#'+name+'_secondary').click(function(){addToInput('#'+secondary+' ')});
         //$('#img_'+name).click(function(){addToInput('#'+primary+' ')});
      }
 
-    function addToInput(msg)
-    {
-      $('#input').val($('#input').val() + msg);
-      $currentInput.focus();
-    }
+
 
     addActionDiv('army','trai','figh','Train','Fight');
     addActionDiv('science','rese','disc','Research','Discover');

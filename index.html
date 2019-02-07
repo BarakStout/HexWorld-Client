@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!--icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/lib/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
@@ -21,6 +24,7 @@
         <h3 id="loginerror" class="error-message" hidden>
           Login Failed. Try a different Empire name.
         </h3>
+
 			</div>
       <div class="tutorial">
         <font class="tutorial-suggest-text" color="white">
@@ -43,7 +47,7 @@
 			<div class="row content page">
 				<!-- Action & Resources column -->
 				<div class="container col-md-1 dark">
-				  <div id="actions">
+				  <div id="actions" class="align-middle">
 				  </div>
 				</div>
 
@@ -59,11 +63,11 @@
 				</div>
 
 				<!-- Leaderboard -->
-				<div class="container col-md-3">
+				<div class="container col-md-3 userpane">
 				  <table class="table">
 				   <thead>
 					 <tr>
-             <th></th>
+             <th style="width:60px;"></th>
             <th>Turns</th>
 					   <th>=T=</th>
 					   <th>Lv.</th>
@@ -91,6 +95,7 @@
     <li class="dead page">
         <div class="form page">
           <h3 class="title">Your empire is no more!</h3>
+          <h4 class="title" id="killer"></h4>
         </div>
     </li>
 
