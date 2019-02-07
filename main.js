@@ -354,6 +354,9 @@ $(function() {
      if(!showUserActions) $('.btn-action-list').hide();
      else $('.btn-action-list').show();
 
+     if(myEmpire.aspects['growth'].quantity >= 10) $('#conquer').show();
+     else $('#conquer').hide();
+
   }
 
   const addToInput = (msg) =>
@@ -384,13 +387,12 @@ $(function() {
  			if(userList[user].username != username) {
  				var row = '';
  				row += '<tr>';
-        row += '<td><button type="button" class="btn btn-success btn-action-list">'+'+'+'</button>';
+        row += '<td><button type="button" class="btn btn-success btn-action-list">'+'<i class="fas fa-caret-down"></i>'+'</button>';
         row += '<div class="dropdown-content action-nav"><ul class="action-nav-div">' +
           '<li class="fight" data-target="'+user+'">Fight</li>' +
           '<li class="tradedeal" data-target="'+user+'">Trade Deal</li>' +
           '<li class="treaty" data-target="'+user+'">Treaty</li>' +
           '<li class="sendResources" data-target="'+user+'">Send Resources</li>' +
-          '<li class="privatemsg" data-target="'+user+'">Private Message</li>' +
           '</ul></div></td>';
          row += '<td>'+userList[user].age+'</td>';
  				row += '<td>'+userList[user].territory+'</td>';
@@ -607,27 +609,40 @@ $(function() {
 
     function addActionDiv(name,primary,secondary,primaryText,secondaryText)
     {
-      str = '<div id="action_div1" class="'+name+'_div">' +
-            '<div class="row content action-n-icon">' +
+      str = '<span class="float" id="lvlup_'+name+'"><i class="fas fa-angle-double-up"></i></span>'+
+            '<span class="float_bottom" id="upgrade_'+name+'"><i class="fas fa-plus"></i></span>'+
+            '<div id="action_div1" class="'+name+'_div">' +
+            '<div class="row content action-n-icon '+name+'_div_row">' +
             '<div class="col-md-12">' +
-            '<span class="action-level-label" id="'+name+'_lvl"></span>' +
-            '<span class="float" id="lvlup_'+name+'"><span class="glyphicon glyphicon-plus"></span></span>'+
-            //'<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
+            '<span class="action-level-label" id="'+name+'_lvl"></span>' +            //'<img src="img/'+name+'_icon.png" id="img_'+name+'" width="100" style="padding:20px;" title="'+name+'"/>'+
             //'<span class="action-progress-label" id="'+name+'_progress" align="center">0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</span>' +
             '<div class="progress-circle" id="'+name+'_progress" data-progress="0" data-value="0" data-maxvalue="10">'+
             '<span class="tooltiptext" id="'+name+'_maxsize">10</span></div>'+
-            '<span class="float_bottom" id="upgrade_'+name+'">?</span>'+
+
 
 //            '<div class="col-md-7">'+capitalizeFirstLetter(name)+ +
 //            '<button type="button" class="btn btn-primary action-btn" id="'+name+'_secondary">'+secondaryText+'</button>' +
 //          '</div></div><div class="progress">' +
 //            '<div id="'+name+'_progressbar" class="progress-bar" role="progressbar" style="width: 0%;" >0/'+numberWithCommas(MAX_RESOURCE_QUANTITY)+'</div>' +
             '</div></div></div>';
+        if(name == 'growth')
+          str = '<span class="float_middle" id="conquer"><i class="fas fa-exclamation"></i></span>'+str;
         $('#actions').append(str);
         if(name == 'army' || name == 'science' || name == 'development')
           $('.'+name+'_div').css('opacity', 0.4);
+        $('#conquer').hide();
         $('#lvlup_'+name).hide();
         $('#upgrade_'+name).hide();
+
+        $('#conquer').click(
+          function(){
+            event.stopPropagation(); // DO NOT REMOVE
+            console.log("conquer");
+            message = '#conq';
+            socket.emit('new message', {username, message });
+          }
+        )
+
         $('#lvlup_'+name).click(
           function(){
             event.stopPropagation(); // DO NOT REMOVE
