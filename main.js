@@ -255,6 +255,7 @@ $(function() {
 
   const updateAspects = (stats) => {
     console.log(stats.data);
+    showUserActions = false;
     for(i=0;i<ASPECT_NAMES.length;i++)
     {
       aspect = ASPECT_NAMES[i];
@@ -382,7 +383,7 @@ $(function() {
 
      			}
          }
-          showUserActions = false;
+
  		for(user in userList) {
  			if(userList[user].username != username) {
  				var row = '';
@@ -402,7 +403,6 @@ $(function() {
  				$('#users').append(row);
  			   }
       }
-
          $('.userName').click(
            function(){
              addToInput('/whisper ' + $(this).attr('id') + ' ');
@@ -424,13 +424,14 @@ $(function() {
            });
         $('.sendResources').click(
           function(){
-            message = '/give ' + $(this).attr('data-target') + ' ' +
-              $('#sendgoodsType').val() + ' ' +
-              $('#sendgoodsQty').val();
+            console.log("sendin'" ); // DEBUG
             $chatPage.fadeOut();
             $sendGoodsPage.fadeIn();
             $('#sendResources').click(
               function() {
+                message = '/give ' + $(this).attr('data-target') + ' ' +
+                  $(this).attr('data-value') + ' ' +
+                  $('#sendgoodsQty').val();
                 console.log(message);
                 socket.emit('new message', {username, message });
                 $sendGoodsPage.fadeOut();
