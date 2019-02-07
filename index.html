@@ -96,12 +96,16 @@
 
     <li class="sendgoods page">
 			<div class="form">
-				<h3 class="title">What do you want to send</h3>
+				<h3 class="title">Select a Resource to Send.</h3>
 				<select class="sendgood" id="sendgoodsType" />
-          <option value="army">Soldiers</option>
-          <option value="production">Production</option>
+          <option value="army">Soldiers (Army)</option>
+          <option value="science">Data (Science)</option>
+          <option value="production">Goods (Production)</option>
+          <option value="diplomacy">Accord (Diplomacy)</option>
+          <option value="growth">Power (Growth)</option>
+          <option value="development">Progress (Development)</option>
         </select>
-        <h3 class="title">how much</h3>
+        <h3 class="title">How Many?</h3>
 				<input class="sendgood" id="sendgoodsQty" type="number" maxlength="12" />
         <button id="sendResources" class="btn btn-success">Send</button>
       </div>
