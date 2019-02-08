@@ -600,7 +600,19 @@ $(function() {
     });
 
     socket.on('dead', (data) => {
-      $('#killer').html("Your empire was destroyed by " + data.bywhom);
+      switch(data.method)
+      {
+        case "fight":
+          msg = "Your empire was destroyed by " + data.bywhom;
+          break;
+        case "buy":
+          msg = "Your empire was bought by " + data.bywhom;
+          break;
+        default:
+          msg = "You got killed by a random event...";
+          break;
+      }
+      $('#killer').html(msg);
       $chatPage.fadeOut(4000);
       $deadPage.fadeIn(4000);
      } );
