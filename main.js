@@ -253,6 +253,58 @@ $(function() {
     return COLORS[index];
   }
 
+  const updateBtnActionList = () =>
+  {
+    //hide actions the user cannot do
+    if(myEmpire.aspects['army'].quantity > 0 )
+    {
+      $('.fight').show();
+      showUserActions = true;
+    }
+    else $('.fight').hide();
+
+    if(myEmpire.aspects['production'].quantity >= 10 &&
+       myEmpire.aspects['diplomacy'].quantity >= 10 &&
+       myEmpire.aspects['growth'].quantity >= 10) {
+       {
+         $('.tradedeal').show();
+         showUserActions = true;
+       }
+   } else {
+     $('.tradedeal').hide();
+   }
+
+   for(user in userList) {
+     if(myEmpire.aspects['diplomacy'].quantity >= userList[user].territory)
+     {
+       $('.treaty').show();
+       showUserActions = true;
+     }
+     else
+       $('.treaty').hide();
+   }
+
+   if(myEmpire.aspects['army'].quantity > 0 ||
+      myEmpire.aspects['science'].quantity > 0 ||
+      myEmpire.aspects['production'].quantity > 0 ||
+      myEmpire.aspects['diplomacy'].quantity > 0 ||
+      myEmpire.aspects['growth'].quantity > 0 ||
+      myEmpire.aspects['development'].quantity > 0)
+      {
+        $('.sendResources').show();
+        showUserActions = true;
+        console.log('HERE');
+      }
+      else
+       $('.sendResources').hide();
+
+     if(!showUserActions) $('.btn-action-list').hide();
+     else $('.btn-action-list').show();
+
+     if(myEmpire.aspects['growth'].quantity >= 10) $('#conquer').show();
+     else $('#conquer').hide();
+  }
+
   const updateAspects = (stats) => {
     console.log(stats.data);
     showUserActions = false;
@@ -309,54 +361,10 @@ $(function() {
       $('.development_div').css('opacity', 0.4);
     }
 
-    //hide actions the user cannot do
-    if(myEmpire.aspects['army'].quantity > 0 )
-    {
-      $('.fight').show();
-      showUserActions = true;
-    }
-    else $('.fight').hide();
+    console.log('HELLO!!!!????!!!');
+    updateBtnActionList();
 
-    if(myEmpire.aspects['production'].quantity >= 10 &&
-       myEmpire.aspects['diplomacy'].quantity >= 10 &&
-       myEmpire.aspects['growth'].quantity >= 10) {
-       {
-         $('.tradedeal').show();
-         showUserActions = true;
-       }
-   } else {
-     $('.tradedeal').hide();
-   }
 
-   for(user in userList) {
-     if(myEmpire.aspects['diplomacy'].quantity >= userList[user].territory)
-     {
-       $('.treaty').show();
-       showUserActions = true;
-     }
-     else
-       $('.treaty').hide();
-   }
-
-   if(myEmpire.aspects['army'].quantity > 0 ||
-      myEmpire.aspects['science'].quantity > 0 ||
-      myEmpire.aspects['production'].quantity > 0 ||
-      myEmpire.aspects['diplomacy'].quantity > 0 ||
-      myEmpire.aspects['growth'].quantity > 0 ||
-      myEmpire.aspects['development'].quantity > 0)
-      {
-        $('.sendResources').show();
-        showUserActions = true;
-        console.log('HERE');
-      }
-      else
-       $('.sendResources').hide();
-
-     if(!showUserActions) $('.btn-action-list').hide();
-     else $('.btn-action-list').show();
-
-     if(myEmpire.aspects['growth'].quantity >= 10) $('#conquer').show();
-     else $('#conquer').hide();
 
   }
 
@@ -424,13 +432,15 @@ $(function() {
            });
         $('.sendResources').click(
           function(){
-            console.log("sendin'" ); // DEBUG
+            target = $(this).attr('data-target');
+            console.log("sendin' to " + target ); // DEBUG
             $chatPage.fadeOut();
             $sendGoodsPage.fadeIn();
-            $('#sendResources').click(
+            $('#sendResources').click({target},
               function() {
-                message = '/give ' + $(this).attr('data-target') + ' ' +
-                  $(this).attr('data-value') + ' ' +
+                console.log(target);
+                message = '/give ' + target + ' ' +
+                  $('#sendgoodsType option:selected').attr('data-value') + ' ' +
                   $('#sendgoodsQty').val();
                 console.log(message);
                 socket.emit('new message', {username, message });
@@ -440,6 +450,7 @@ $(function() {
             )
           }
         );
+        updateBtnActionList();
   }
 
   // Keyboard events
