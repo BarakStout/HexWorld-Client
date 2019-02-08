@@ -338,6 +338,8 @@ $(function() {
     }
     for(i=0;i<ASPECT_NAMES.length;i++)
     {
+
+      // FIX THIS
       aspect = ASPECT_NAMES[i];
     if(myEmpire.aspects['science'].quantity == myEmpire.aspects['science'].maxsize)
       $('#lvlup_'+aspect).show();
