@@ -1,4 +1,5 @@
 $(function() {
+
   var FADE_TIME = 150; // ms
   var TYPING_TIMER_LENGTH = 400; // ms
   var COLORS = [
@@ -489,6 +490,10 @@ $(function() {
   });
 
   // Socket events
+
+  socket.on('loadads', (data) => {
+    console.log(data);
+  });
 
   // Whenever the server emits 'login', log the login message
   socket.on('login', (data) => {
