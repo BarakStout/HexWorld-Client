@@ -340,12 +340,14 @@ $(function() {
     {
 
       // FIX THIS
+      var discCost = Math.pow(ASPECT_UPGRADE_FACTOR, myEmpire.aspects[ASPECT_NAMES[i]].level - 1) * 10;
+      var builCost = myEmpire.aspects[ASPECT_NAMES[i]].maxsize;
       aspect = ASPECT_NAMES[i];
-    if(myEmpire.aspects['science'].quantity == myEmpire.aspects['science'].maxsize)
+    if(myEmpire.aspects['science'].quantity >= discCost)
       $('#lvlup_'+aspect).show();
     else
       $('#lvlup_'+aspect).hide();
-    if(myEmpire.aspects['development'].quantity == myEmpire.aspects['development'].maxsize)
+    if(myEmpire.aspects['development'].quantity >= builCost)
       $('#upgrade_'+aspect).show();
     else
       $('#upgrade_'+aspect).hide();
