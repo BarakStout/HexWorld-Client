@@ -338,8 +338,6 @@ $(function() {
     }
     for(i=0;i<ASPECT_NAMES.length;i++)
     {
-
-      // FIX THIS
       var discCost = Math.pow(ASPECT_UPGRADE_FACTOR, myEmpire.aspects[ASPECT_NAMES[i]].level - 1) * 10;
       var builCost = myEmpire.aspects[ASPECT_NAMES[i]].maxsize;
       aspect = ASPECT_NAMES[i];
